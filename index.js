@@ -11,10 +11,30 @@ const web3 = new Web3();
 web3.setProvider(new web3.providers.HttpProvider(WEB3_PROVIDER))
 
 server.route({
-    path: '/',
+    path: '/balance/{address}',
     method: 'GET',
     handler: (request, reply) => {
-        reply(web3.eth.getBalance(web3.eth.coinbase));
+        reply(web3.eth.getBalance(request.params.address));
+    }
+});
+
+let lastCount = 0;
+let lastTime = 0;
+server.route({
+    path: '/progress',
+    method: 'GET',
+    handler: (request, reply) => {
+        let { currentBlock, highestBlock } = web3.eth.syncing;
+        reply(`
+            <div>
+                ${highestBlock} - ${currentBlock} = ${highestBlock - currentBlock}
+            </div>
+            <div>
+                ${currentBlock - lastCount} / ${new Date() - lastTime} = ${(currentBlock - lastCount) / (new Date() - lastTime) * 1000}
+            </div>
+        `);
+        lastCount = currentBlock;
+        lastTime = new Date();
     }
 });
 
