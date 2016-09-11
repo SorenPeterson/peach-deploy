@@ -38,6 +38,16 @@ server.route({
     }
 });
 
+server.route({
+    path: '/containers',
+    method: 'GET',
+    handler: (request, reply) => {
+        docker.listContainers((err, containers) => {
+            reply(containers);
+        });
+    }
+});
+
 server.start().then(err => {
     console.log('started', HAPI_HOST, HAPI_PORT);
 }, err => {

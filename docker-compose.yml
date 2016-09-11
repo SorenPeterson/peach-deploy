@@ -8,8 +8,11 @@ services:
             HAPI_HOST: 0.0.0.0
             HAPI_PORT: 3000
             WEB3_PROVIDER: http://parity:8545
+            DOCKER_SOCK: /var/run/docker.sock
         depends_on:
             - parity
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
     parity:
         image: ethcore/parity
         command: [--jsonrpc-interface=all, --jsonrpc-hosts=all, --pruning=fast]
