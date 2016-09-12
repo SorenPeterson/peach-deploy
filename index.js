@@ -18,6 +18,19 @@ server.route({
     }
 });
 
+server.route({
+    path: '/logs/{id}',
+    method: 'GET',
+    handler: (request, reply) => {
+        let container = docker.getContainer(request.params.id);
+        container.logs({
+            follow: true, stdout: true, stderr: true
+        }, (err, stream) => {
+            reply(stream);
+        });
+    }
+});
+
 let lastCount = 0;
 let lastTime = 0;
 server.route({
