@@ -26,7 +26,7 @@ server.route({
         container.logs({
             stdout: true, stderr: true
         }, (err, logs) => {
-            reply(logs).type('text/plain');
+            reply(logs).type('text/html');
         });
     }
 });
