@@ -24,9 +24,9 @@ server.route({
     handler: (request, reply) => {
         let container = docker.getContainer(request.params.id);
         container.logs({
-            follow: true, stdout: true, stderr: true
-        }, (err, stream) => {
-            reply(stream);
+            stdout: true, stderr: true
+        }, (err, logs) => {
+            reply(logs).type('text/plain');
         });
     }
 });
