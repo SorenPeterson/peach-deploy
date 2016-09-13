@@ -1,9 +1,11 @@
-// 0xfedc8c66bb7c0ce1633eec8b47955971bc450fa9
+// 0x43d466afad6d9e89fd5b5f5f1a71d52600759179
 pragma solidity ^0.4.0;
 
 contract Peach {
     address public owner;
     mapping (address => Account) accounts;
+
+    event Create (string descriptor, address creator);
 
     struct Account {
         string descriptor;
@@ -17,5 +19,6 @@ contract Peach {
     function createPeach (string descriptor) {
         owner.send(msg.value);
         accounts[msg.sender] = Account(descriptor, msg.value);
+        Create(descriptor, msg.sender);
     }
 }

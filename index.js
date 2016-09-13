@@ -2,7 +2,7 @@ import Docker from 'dockerode';
 import { Server } from 'hapi';
 import Web3 from 'web3';
 
-const { DOCKER_SOCK, HAPI_HOST, HAPI_PORT, WEB3_PROVIDER } = process.env;
+const { DOCKER_SOCK, HAPI_HOST, HAPI_PORT, WEB3_PROVIDER, CONTRACT_ADDRESS } = process.env;
 
 const docker = new Docker({ socketPath: DOCKER_SOCK });
 const server = new Server();
@@ -61,8 +61,16 @@ server.route({
     }
 });
 
-server.start().then(err => {
-    console.log('started', HAPI_HOST, HAPI_PORT);
-}, err => {
-    console.log(err);
-});
+new Promise((resolve, reject) => {
+    fs.readFile('peach.sol', (err, data) => err ? reject(err) : resolve(data));
+})
+.then(source => {
+    let { info: { abiDefinition } } = web3.eth.compile.solidity(source);
+    server.app.contract = web3.eth.contract(abiDefinition).at(CONTRACT_ADDRESS);
+    server.app.contract.Create({}, {}, (err, result) => {
+        console.log(err, result);
+    });
+})
+.then(server.start)
+.then(() => console.log('Server started'))
+.catch(err => console.log(err));

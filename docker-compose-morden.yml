@@ -1,0 +1,21 @@
+version: '2'
+services:
+    web:
+        build: .
+        ports:
+            - "80:3000"
+        environment:
+            HAPI_HOST: 0.0.0.0
+            HAPI_PORT: 3000
+            WEB3_PROVIDER: http://parity:8545
+            DOCKER_SOCK: /var/run/docker.sock
+            CONTRACT_ADDRESS: 0xfedc8c66bb7c0ce1633eec8b47955971bc450fa9
+        depends_on:
+            - parity
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+    parity:
+        image: ethcore/parity
+        command: [--jsonrpc-interface=all, --jsonrpc-hosts=all, --pruning=fast]
+        volumes:
+            - /srv/parity:/root/.parity
