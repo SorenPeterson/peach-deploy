@@ -1,6 +1,7 @@
 import Docker from 'dockerode';
 import { Server } from 'hapi';
 import Web3 from 'web3';
+import fs from 'fs';
 
 const { DOCKER_SOCK, HAPI_HOST, HAPI_PORT, WEB3_PROVIDER, CONTRACT_ADDRESS } = process.env;
 
