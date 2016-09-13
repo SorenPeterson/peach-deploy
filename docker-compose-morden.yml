@@ -9,7 +9,7 @@ services:
             HAPI_PORT: 3000
             WEB3_PROVIDER: http://parity:8545
             DOCKER_SOCK: /var/run/docker.sock
-            CONTRACT_ADDRESS: 0xfedc8c66bb7c0ce1633eec8b47955971bc450fa9
+            CONTRACT_ADDRESS: 0xeb72acae355dfdc48de4bafbd3f20104a5abc408
         depends_on:
             - parity
         volumes:

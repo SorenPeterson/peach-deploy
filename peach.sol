@@ -1,4 +1,3 @@
-// 0x43d466afad6d9e89fd5b5f5f1a71d52600759179
 pragma solidity ^0.4.0;
 
 contract Peach {
