@@ -67,8 +67,8 @@ new Promise((resolve, reject) => {
     fs.readFile('peach.sol', (err, data) => err ? reject(err) : resolve(data));
 })
 .then(source => {
-    let { info: { abiDefinition } } = solc.compile(source.toString(), 1);
-    server.app.contract = web3.eth.contract(abiDefinition).at(CONTRACT_ADDRESS);
+    let { contracts: { Peach: { interface } } } = solc.compile(source.toString(), 1);
+    server.app.contract = web3.eth.contract(interface).at(CONTRACT_ADDRESS);
     server.app.contract.Create({}, {}, (err, result) => {
         console.log(err, result);
     });
