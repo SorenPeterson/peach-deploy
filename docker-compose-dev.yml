@@ -9,7 +9,7 @@ services:
             HAPI_PORT: 3000
             WEB3_PROVIDER: http://parity:8545
             DOCKER_SOCK: /docker.sock
-            CONTRACT_ADDRESS: 0xf2e2e8fc20b55c28ba349afb6627f7b24e5debb1 
+            CONTRACT_ADDRESS: 0xf2e2e8fc20b55c28ba349afb6627f7b24e5debb1
         depends_on:
             - parity
         command: [npm, run, dev]

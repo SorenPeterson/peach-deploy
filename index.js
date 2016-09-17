@@ -42,6 +42,9 @@ server.route({
         let { currentBlock, highestBlock } = web3.eth.syncing;
         reply(`
             <div>
+                ${web3.eth.syncing}
+            </div>
+            <div>
                 ${highestBlock} - ${currentBlock} = ${highestBlock - currentBlock}
             </div>
             <div>
