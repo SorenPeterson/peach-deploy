@@ -9,12 +9,15 @@ services:
             HAPI_PORT: 3000
             WEB3_PROVIDER: http://parity:8545
             DOCKER_SOCK: /docker.sock
+            CONTRACT_ADDRESS: 0x90cb3a0bcbdc3f98192b36f8e45cd6ac7f50180a
         depends_on:
             - parity
+        command: [npm, run, dev]
         volumes:
             - /private/var/run/docker.sock:/docker.sock
+            - ./index.js:/srv/app/index.js
     parity:
         image: ethcore/parity
-        command: [--jsonrpc-interface=all, --jsonrpc-hosts=all, --pruning=fast]
+        command: [--jsonrpc-interface=all, --jsonrpc-hosts=all, --pruning=fast, --chain=morden]
         volumes:
             - ~/.parity:/root/.parity

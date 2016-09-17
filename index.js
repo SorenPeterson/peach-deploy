@@ -58,6 +58,7 @@ server.route({
     method: 'GET',
     handler: (request, reply) => {
         docker.listContainers((err, containers) => {
+            console.log(err);
             reply(containers);
         });
     }
@@ -67,12 +68,12 @@ new Promise((resolve, reject) => {
     fs.readFile('peach.sol', (err, data) => err ? reject(err) : resolve(data));
 })
 .then(source => {
-    let { contracts: { Peach: { interface } } } = solc.compile(source.toString(), 1);
-    server.app.contract = web3.eth.contract(interface).at(CONTRACT_ADDRESS);
+    let { contracts: { Peach: { interface: abi } } } = solc.compile(source.toString(), 1);
+    server.app.contract = web3.eth.contract(JSON.parse(abi)).at(CONTRACT_ADDRESS);
     server.app.contract.Create({}, {}, (err, result) => {
         console.log(err, result);
     });
 })
-.then(server.start)
+.then(() => server.start())
 .then(() => console.log('Server started'))
 .catch(err => console.log(err));
