@@ -27,5 +27,8 @@
     "presets": [
       "es2015"
     ]
+  },
+  "devDependencies": {
+    "nodemon": "^1.10.2"
   }
 }
