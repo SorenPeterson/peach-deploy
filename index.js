@@ -21,6 +21,14 @@ server.route({
 });
 
 server.route({
+    path: '/accounts',
+    method: 'GET',
+    handler: (request, reply) => {
+        reply(web3.eth.accounts);
+    }
+});
+
+server.route({
     path: '/logs/{id}',
     method: 'GET',
     handler: (request, reply) => {
